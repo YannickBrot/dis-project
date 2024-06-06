@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Bucket } from '../model/bucket';
 import { Task } from '../model/task';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-project',
@@ -95,5 +96,19 @@ export class ProjectComponent implements OnInit {
 
   generateId(): string {
     return 'task' + Math.random().toString(36).substr(2, 9);
+  }
+
+  drop(event: CdkDragDrop<Task[]>, bucketId: string) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      event.container.data[event.currentIndex].bucketId = bucketId;
+    }
   }
 }
