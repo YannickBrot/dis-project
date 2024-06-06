@@ -65,5 +65,3 @@ docker-compose down
 ```
 To stop the Angular CLI server, press `Ctrl+C` in the terminal where it is running.
 To stop the Spring Boot application, press `Ctrl+C` in its terminal.
-
-Thank you for setting up the application! If you encounter any issues, please refer to the documentation or contact the support team.
