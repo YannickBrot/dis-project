@@ -26,15 +26,24 @@ public class ProjectService {
     }
 
     public Project createProject(Project project) {
-        return this.jdbi.withHandle(h ->
-                h.createUpdate("""
-                                INSERT INTO projects (name, description, created_at, deadline, hour_estimate, price)
-                                VALUES (:name, :description, :createdAt, :deadline, :hourEstimate, :price)
-                                 """)
-                        .bindMethods(project)
-                        .executeAndReturnGeneratedKeys()
-                        .mapTo(Project.class)
-                        .one()
+        return this.jdbi.withHandle(h -> {
+                    var created = h.createUpdate("""
+                                    INSERT INTO projects (name, description, created_at, deadline, hour_estimate, price)
+                                    VALUES (:name, :description, :createdAt, :deadline, :hourEstimate, :price)
+                                     """)
+                            .bindMethods(project)
+                            .executeAndReturnGeneratedKeys()
+                            .mapTo(Project.class)
+                            .one();
+                    h.createUpdate("""
+                                    INSERT INTO buckets (project_id, name) VALUES (:projectId, 'TO-DO');
+                                    INSERT INTO buckets (project_id, name) VALUES (:projectId, 'DOING');
+                                    INSERT INTO buckets (project_id, name) VALUES (:projectId, 'DONE');
+                                    """)
+                            .bind("projectId", created.id())
+                            .execute();
+                    return created;
+                }
         );
     }
 }

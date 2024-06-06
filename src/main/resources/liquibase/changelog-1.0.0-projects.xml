@@ -29,11 +29,10 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="1.0.0-dis-project:mock_project" author="MM">
+    <changeSet id="1.0.0-dis-project:create_projects" author="MM">
         <sql>
-            INSERT INTO projects (name, description, created_at, deadline, hour_estimate, price)
-            VALUES ('New Website Development', 'Develop a new company website.', CURRENT_TIMESTAMP, '2024-12-31 23:59:00+00', 500, 10000);
-            VALUES ('Mobile App', 'Develop a mobile application for both iOS and Android.', CURRENT_TIMESTAMP, '2024-12-31 23:59:00+00', 800, 20000);
+            INSERT INTO projects (name, description, created_at, deadline, hour_estimate, price) VALUES ('New Website Development', 'Develop a new company website.', CURRENT_TIMESTAMP, '2024-12-31 23:59:00+00', 500, 10000);
+            INSERT INTO projects (name, description, created_at, deadline, hour_estimate, price) VALUES ('Mobile App', 'Develop a mobile application for both iOS and Android.', CURRENT_TIMESTAMP, '2024-12-31 23:59:00+00', 800, 20000);
         </sql>
     </changeSet>
 </databaseChangeLog>
