@@ -50,7 +50,7 @@ npm install
 ```
 Serve the Angular application:
 ```markdown
-ng serve
+npm start
 ```
 
 ## Accessing the Application
