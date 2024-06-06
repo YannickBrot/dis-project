@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="1.0.0:dis-project:projects_table" author="MM">
+        <createTable tableName="projects">
+            <column name="id" type="int" autoIncrement="true" generationType="always">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="text" defaultValue="New Project">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="timestamptz">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deadline" type="timestamptz">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hour_estimate" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.0-dis-project:mock_project" author="MM">
+        <sql>
+            INSERT INTO projects (name, description, created_at, deadline, hour_estimate, price)
+            VALUES ('Test Project', 'A test project for initial setup.', CURRENT_TIMESTAMP, '2024-12-31 23:59:00+00', 120, 10000);
+        </sql>
+    </changeSet>
+</databaseChangeLog>

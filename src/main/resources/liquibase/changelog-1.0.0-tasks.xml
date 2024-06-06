@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="1.0.0:dis-project:tasks_table" author="MM">
+        <createTable tableName="tasks">
+            <column name="id" type="int" autoIncrement="true" generationType="always">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="bucket_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_tasks_buckets"
+                             references="buckets(id)"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.0-dis-project:create_tasks" author="MM">
+        <sql>
+            INSERT INTO tasks (bucket_id, name, description) VALUES (1, 'Try do me!', 'I am an example of a task in the TO-DO buckets');
+            INSERT INTO tasks (bucket_id, name, description) VALUES (2, 'Doing man', 'I am an example of a task in the DOING buckets');
+            INSERT INTO tasks (bucket_id, name, description) VALUES (3, 'Done...', 'I am an example of a task in the DONE buckets');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

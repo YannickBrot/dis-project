@@ -5,4 +5,7 @@
     <preConditions>
         <dbms type="postgresql"/>
     </preConditions>
+    <include file="/liquibase/changelog-1.0.0-projects.xml"/>
+    <include file="/liquibase/changelog-1.0.0-buckets.xml"/>
+    <include file="/liquibase/changelog-1.0.0-tasks.xml"/>
 </databaseChangeLog>
