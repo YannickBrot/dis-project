@@ -12,5 +12,6 @@ public class JerseyApplicationConfig extends ResourceConfig {
     public JerseyApplicationConfig() {
         register(ProjectAPI.class);
         register(TaskAPI.class);
+        register(CorsFilter.class);
     }
 }
