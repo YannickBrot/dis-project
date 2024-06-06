@@ -22,7 +22,7 @@ Before you begin, ensure you have the following installed on your machine:
 ### Start the PostgreSQL Database
 Navigate to the directory containing your `docker-compose.yml` file:
 ```markdown
-cd /.
+cd ./
 ```
 Start the PostgreSQL database using Docker Compose:
 ```markdown
@@ -32,7 +32,7 @@ docker-compose up -d
 ### Start the Backend (Spring Boot Application)
 Navigate to the backend directory:
 ```markdown
-cd /.
+cd ./
 ```
 Run the Spring Boot application using Maven:
 ```markdown
