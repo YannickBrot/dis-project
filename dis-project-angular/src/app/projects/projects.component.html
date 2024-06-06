@@ -1,0 +1,8 @@
+<ng-container *ngFor="let project of projects">
+  <div class="project-item">
+    <h3>{{ project.name }}</h3>
+    <p>{{ project.description }}</p>
+    <a routerLink="/projects/{{project.id}}"><button>Select</button></a>
+  </div>
+</ng-container>
+<a routerLink="/create-project"><button>Create New Project</button></a>

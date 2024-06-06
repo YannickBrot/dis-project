@@ -1,0 +1,25 @@
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.project-item {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.project-item h3 {
+  margin-top: 0;
+}
+
+.project-item p {
+  margin-bottom: 10px;
+}
+
+
+.project-item button:hover {
+  background-color: #e0e0e0;
+}

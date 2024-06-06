@@ -1,0 +1,15 @@
+<div class="kanban-board">
+  <div class="kanban-column" *ngFor="let bucket of buckets">
+    <h2 class="kanban-column-header">{{ bucket.name }}</h2>
+    <ul class="kanban-column-tasks">
+      <li class="kanban-task" *ngFor="let task of bucket.tasks">
+        <strong>{{ task.name }}</strong>: {{ task.description }}
+      </li>
+    </ul>
+    <div class="add-task-form">
+      <input type="text" placeholder="Task Name" [(ngModel)]="newTask.name">
+      <input type="text" placeholder="Task Description" [(ngModel)]="newTask.description">
+      <button (click)="addTask(bucket.id)">Add Task</button>
+    </div>
+  </div>
+</div>
