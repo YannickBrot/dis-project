@@ -1,9 +1,9 @@
 export interface Project {
-  id: string | undefined;
-  name: string | undefined;
-  description: string | undefined;
-  createdAt: Date | undefined;
-  deadline: Date | undefined;
-  hourEstimate: number | undefined;
-  price: number | undefined;
+  id: number | undefined;
+  name: string;
+  description: string;
+  createdAt: Date;
+  deadline: Date;
+  hourEstimate: number;
+  price: number;
 }

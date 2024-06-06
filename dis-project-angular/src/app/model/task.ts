@@ -1,6 +1,6 @@
 export interface Task {
-  id: string | undefined;
+  id: number;
   name: string;
-  description: string | undefined;
-  bucketId: string;
+  description: string;
+  bucketId: number;
 }

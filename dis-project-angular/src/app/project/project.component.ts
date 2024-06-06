@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { Bucket } from '../model/bucket';
 import { Task } from '../model/task';
 import { ProjectService } from '../project.service';
@@ -13,27 +15,33 @@ export class ProjectComponent implements OnInit {
 
   buckets: Bucket[] = [];
   newTask: Task = {
-    id: undefined,
+    id: 0,
     name: '',
     description: '',
-    bucketId: ''
+    bucketId: 0
   };
+  projectId: number | undefined;
 
-  constructor(private projectService: ProjectService) { }
+  constructor(
+    private projectService: ProjectService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    this.loadBuckets();
-  }
-
-  loadBuckets(): void {
-    const projectId = 'project1'; // Use the actual project ID
-    this.projectService.getBucketsForProject(projectId).subscribe(
-      (buckets) => this.buckets = buckets,
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        this.projectId = Number(params.get('id'));
+        return this.projectService.getBucketsForProject(this.projectId);
+      })
+    ).subscribe(
+      (buckets) => {
+        this.buckets = buckets;
+      },
       (error) => console.error('Error fetching buckets', error)
     );
   }
 
-  addTask(bucketId: string): void {
+  addTask(bucketId: number): void {
     if (this.newTask.name && this.newTask.description) {
       const newTask: Task = { ...this.newTask, id: this.generateId(), bucketId };
       this.projectService.createTask(newTask).subscribe(
@@ -50,12 +58,12 @@ export class ProjectComponent implements OnInit {
     }
   }
 
-  generateId(): string {
-    return 'task' + Math.random().toString(36).substr(2, 9);
+  generateId(): number {
+    return Math.floor(Math.random() * 1000000);
   }
 
-  deleteTask(taskId: string | undefined, bucketId: string | undefined): void {
-    if (!taskId || !bucketId) {
+  deleteTask(taskId: number | undefined, bucketId: number | undefined): void {
+    if (taskId === undefined || bucketId === undefined) {
       console.error('Invalid task or bucket ID');
       return;
     }
@@ -71,7 +79,7 @@ export class ProjectComponent implements OnInit {
     );
   }
 
-  drop(event: CdkDragDrop<Task[]>, bucketId: string) {
+  drop(event: CdkDragDrop<Task[]>, bucketId: number) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
