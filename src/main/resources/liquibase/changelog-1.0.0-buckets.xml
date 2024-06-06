@@ -21,8 +21,11 @@
     <changeSet id="1.0.0-dis-project:create_buckets" author="MM">
         <sql>
             INSERT INTO buckets (project_id, name) VALUES (1, 'TO-DO');
+            INSERT INTO buckets (project_id, name) VALUES (2, 'TO-DO');
             INSERT INTO buckets (project_id, name) VALUES (1, 'DOING');
+            INSERT INTO buckets (project_id, name) VALUES (2, 'DOING');
             INSERT INTO buckets (project_id, name) VALUES (1, 'DONE');
+            INSERT INTO buckets (project_id, name) VALUES (2, 'DONE');
         </sql>
     </changeSet>
 </databaseChangeLog>

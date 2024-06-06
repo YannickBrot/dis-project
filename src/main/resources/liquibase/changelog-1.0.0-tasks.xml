@@ -23,9 +23,12 @@
 
     <changeSet id="1.0.0-dis-project:create_tasks" author="MM">
         <sql>
-            INSERT INTO tasks (bucket_id, name, description) VALUES (1, 'Try do me!', 'I am an example of a task in the TO-DO buckets');
-            INSERT INTO tasks (bucket_id, name, description) VALUES (2, 'Doing man', 'I am an example of a task in the DOING buckets');
-            INSERT INTO tasks (bucket_id, name, description) VALUES (3, 'Done...', 'I am an example of a task in the DONE buckets');
+            INSERT INTO tasks (bucket_id, name, description) VALUES (1, 'Test the application', 'Perform unit and integration tests');
+            INSERT INTO tasks (bucket_id, name, description) VALUES (1, 'Deploy to production', 'Deploy the application to the production environment');
+            INSERT INTO tasks (bucket_id, name, description) VALUES (2, 'Write API endpoints', 'Develop the necessary API endpoints');
+            INSERT INTO tasks (bucket_id, name, description) VALUES (2, 'Implement authentication', 'Add user authentication and authorization');
+            INSERT INTO tasks (bucket_id, name, description) VALUES (3, 'Design the UI', 'Create the initial UI design');
+            INSERT INTO tasks (bucket_id, name, description) VALUES (3, 'Set up the database', 'Install and configure the database');
         </sql>
     </changeSet>
 </databaseChangeLog>
