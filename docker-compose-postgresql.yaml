@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  database:
+    image: postgres:13.3-alpine
+    environment:
+      POSTGRES_DB: dis-db
+      POSTGRES_USER: dis-user
+      POSTGRES_PASSWORD: dis-pass
+    ports:
+      - "5432:5432"
