@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Project} from "../model/project";
+import { Project } from '../model/project';
+import {ProjectService} from "../project.service";
 
 @Component({
   selector: 'app-projects',
@@ -8,31 +9,22 @@ import {Project} from "../model/project";
 })
 export class ProjectsComponent implements OnInit {
 
-  projects: Project[] = [
-    {
-      id: 'project1',
-      name: 'New Website Development',
-      description: 'Develop a new company website',
-      createdAt: new Date('2023-01-01'),
-      deadline: new Date('2023-06-01'),
-      hourEstimate: 500,
-      price: 10000
-    },
-    {
-      id: 'project2',
-      name: 'Mobile App',
-      description: 'Develop a mobile application for both iOS and Android',
-      createdAt: new Date('2023-02-01'),
-      deadline: new Date('2023-08-01'),
-      hourEstimate: 800,
-      price: 20000
-    }
-  ];
+  projects: Project[] = [];
 
-
-  constructor() { }
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
+    this.loadProjects();
   }
 
+  loadProjects(): void {
+    this.projectService.getProjects().subscribe(
+      (data: Project[]) => {
+        this.projects = data;
+      },
+      (error) => {
+        console.error('Error fetching projects', error);
+      }
+    );
+  }
 }
