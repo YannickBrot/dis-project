@@ -26,6 +26,9 @@ public class ProjectService {
     }
 
     public Project createProject(Project project) {
+        if (!project.name().matches("^[\\w\\-\\s]+$")) {
+            throw new IllegalArgumentException("Invalid project name. Only letters, numbers, underscores, hyphens, and spaces are allowed.");
+        }
         return this.jdbi.withHandle(h -> {
                     var created = h.createUpdate("""
                                     INSERT INTO projects (name, description, created_at, deadline, hour_estimate, price)

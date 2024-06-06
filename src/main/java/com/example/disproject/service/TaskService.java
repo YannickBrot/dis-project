@@ -17,6 +17,7 @@ public class TaskService {
     }
 
     public Task createTask(Task task) {
+        if(!taskDescriptionIsGood(task)) throw new IllegalArgumentException("Invalid characters in description.");
         return this.jdbi.withHandle(h ->
                 h.createUpdate("""
                                 INSERT INTO tasks (name, description, bucket_id)
@@ -30,6 +31,7 @@ public class TaskService {
     }
 
     public Task updateTask(Task task) {
+        if(!taskDescriptionIsGood(task)) throw new IllegalArgumentException("Invalid characters in description.");
         return this.jdbi.withHandle(h ->
                 h.createUpdate("""
                                 UPDATE tasks
@@ -41,6 +43,15 @@ public class TaskService {
                         .mapTo(Task.class)
                         .one()
         );
+    }
+
+    /***
+     * Ensure task descriptions do not include potentially harmful characters that could be used for SQL injection or XSS attacks if not properly sanitized.
+     * @param task
+     * @return True if the description of the task does not contain illegal characters
+     */
+    private boolean taskDescriptionIsGood(Task task){
+        return task.description().matches("^[^<>{}\"/|;:.*%$#!@]+$");
     }
 
     public boolean deleteTask(int taskId) {
