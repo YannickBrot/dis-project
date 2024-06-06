@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import {Project} from "../model/project";
+import { Project } from '../model/project';
+import { ProjectService } from '../project.service';
 
 @Component({
   selector: 'app-create-project',
@@ -8,7 +9,7 @@ import {Project} from "../model/project";
   styleUrls: ['./create-project.component.css']
 })
 export class CreateProjectComponent {
-  constructor() {}
+  constructor(private projectService: ProjectService) {}
 
   onSubmit(form: NgForm) {
     if (form.valid) {
@@ -21,8 +22,16 @@ export class CreateProjectComponent {
         hourEstimate: form.value.hourEstimate,
         price: form.value.price,
       };
-      console.log('New Project:', newProject);
-      // Implement further logic to handle the created project (e.g., save to a service or backend)
+
+      this.projectService.createProject(newProject).subscribe(
+        (project) => {
+          console.log('Project created successfully', project);
+          form.reset();
+        },
+        (error) => {
+          console.error('Error creating project', error);
+        }
+      );
     }
   }
 }

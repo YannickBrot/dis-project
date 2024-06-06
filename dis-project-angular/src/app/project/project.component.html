@@ -4,6 +4,7 @@
     <ul class="kanban-column-tasks">
       <li class="kanban-task" *ngFor="let task of bucket.tasks" cdkDrag>
         <strong>{{ task.name }}</strong>: {{ task.description }}
+        <button *ngIf="task.id && bucket.id" (click)="deleteTask(task.id, bucket.id)">Delete</button>
       </li>
     </ul>
     <div class="add-task-form">
