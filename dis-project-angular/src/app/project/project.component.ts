@@ -4,7 +4,6 @@ import { switchMap } from 'rxjs/operators';
 import { Bucket } from '../model/bucket';
 import { Task } from '../model/task';
 import { ProjectService } from '../project.service';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-project',
@@ -79,22 +78,40 @@ export class ProjectComponent implements OnInit {
     );
   }
 
-  drop(event: CdkDragDrop<Task[]>, bucketId: number) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-      const task = event.container.data[event.currentIndex];
-      task.bucketId = bucketId;
-      this.projectService.updateTask(task).subscribe(
-        (updatedTask) => console.log('Task updated successfully', updatedTask),
-        (error) => console.error('Error updating task', error)
-      );
+  moveTaskUp(bucketId: number, taskId: number): void {
+    const bucket = this.buckets.find(b => b.id === bucketId);
+    if (bucket) {
+      const index = bucket.tasks.findIndex(t => t.id === taskId);
+      if (index > 0) {
+        [bucket.tasks[index], bucket.tasks[index - 1]] = [bucket.tasks[index - 1], bucket.tasks[index]];
+      }
+    }
+  }
+
+  moveTaskDown(bucketId: number, taskId: number): void {
+    const bucket = this.buckets.find(b => b.id === bucketId);
+    if (bucket) {
+      const index = bucket.tasks.findIndex(t => t.id === taskId);
+      if (index < bucket.tasks.length - 1) {
+        [bucket.tasks[index], bucket.tasks[index + 1]] = [bucket.tasks[index + 1], bucket.tasks[index]];
+      }
+    }
+  }
+
+  moveTaskToBucket(taskId: number, sourceBucketId: number, targetBucketId: number): void {
+    const sourceBucket = this.buckets.find(b => b.id === sourceBucketId);
+    const targetBucket = this.buckets.find(b => b.id === targetBucketId);
+    if (sourceBucket && targetBucket) {
+      const taskIndex = sourceBucket.tasks.findIndex(t => t.id === taskId);
+      if (taskIndex !== -1) {
+        const [task] = sourceBucket.tasks.splice(taskIndex, 1);
+        task.bucketId = targetBucketId;
+        targetBucket.tasks.push(task);
+        this.projectService.updateTask(task).subscribe(
+          (updatedTask) => console.log('Task updated successfully', updatedTask),
+          (error) => console.error('Error updating task', error)
+        );
+      }
     }
   }
 }

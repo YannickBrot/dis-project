@@ -1,10 +1,15 @@
 <div class="kanban-board">
-  <div class="kanban-column" *ngFor="let bucket of buckets" cdkDropList [cdkDropListData]="bucket.tasks" (cdkDropListDropped)="drop($event, bucket.id)">
+  <div class="kanban-column" *ngFor="let bucket of buckets">
     <h2 class="kanban-column-header">{{ bucket.name }}</h2>
     <ul class="kanban-column-tasks">
-      <li class="kanban-task" *ngFor="let task of bucket.tasks" cdkDrag>
+      <li class="kanban-task" *ngFor="let task of bucket.tasks">
         <strong>{{ task.name }}</strong>: {{ task.description }}
         <button *ngIf="task.id && bucket.id" (click)="deleteTask(task.id, bucket.id)">Delete</button>
+        <button (click)="moveTaskUp(bucket.id, task.id)">↑</button>
+        <button (click)="moveTaskDown(bucket.id, task.id)">↓</button>
+        <button *ngFor="let targetBucket of buckets" (click)="moveTaskToBucket(task.id, bucket.id, targetBucket.id)" [disabled]="bucket.id === targetBucket.id">
+          Move to {{ targetBucket.name }}
+        </button>
       </li>
     </ul>
     <div class="add-task-form">

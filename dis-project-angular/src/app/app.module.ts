@@ -7,7 +7,6 @@ import { ProjectComponent } from './project/project.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
 import {FormsModule} from "@angular/forms";
-import {DragDropModule} from "@angular/cdk/drag-drop";
 import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
@@ -21,7 +20,6 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    DragDropModule,
     HttpClientModule
   ],
   providers: [],
