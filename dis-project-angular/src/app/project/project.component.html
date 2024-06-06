@@ -1,8 +1,8 @@
 <div class="kanban-board">
-  <div class="kanban-column" *ngFor="let bucket of buckets">
+  <div class="kanban-column" *ngFor="let bucket of buckets" cdkDropList [cdkDropListData]="bucket.tasks" (cdkDropListDropped)="drop($event, bucket.id)">
     <h2 class="kanban-column-header">{{ bucket.name }}</h2>
     <ul class="kanban-column-tasks">
-      <li class="kanban-task" *ngFor="let task of bucket.tasks">
+      <li class="kanban-task" *ngFor="let task of bucket.tasks" cdkDrag>
         <strong>{{ task.name }}</strong>: {{ task.description }}
       </li>
     </ul>
